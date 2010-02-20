@@ -1,9 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs AGNX ASUS_OLED EPL ET131X FB_UDL HECI LINE6_USB RT2860 RT2870 RT3070 RTL8187SE RTL8192SU SLICOSS W35UND PRISM2_USB VIDEO_GO7007 VT6655
+%global stgdrvs ASUS_OLED EPL ET131X FB_UDL HECI HYPERV LINE6_USB RT2860 RT2870 RT3070 RT3090 RTL8187SE RTL8192SU RTL8192E SLICOSS W35UND PRISM2_USB VIDEO_GO7007 VT6655 VT6656
+
+# makes handling for rc kernels a whole lot easier:
+#global prever rc8
 
 Name:          staging-kmod-addons
-Version:       2.6.31.5
-Release:       2%{?dist}
+Version:       2.6.32.8
+Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -11,7 +14,7 @@ License:       GPLv2
 URL:           http://www.kernel.org/
 # use the script from Source1 to create this archive; call it like this: 
 #  bash $(rpm --eval '%{_sourcedir}')/create-linux-staging-tarball.sh 2.6.30.8
-Source0:       linux-staging-%{version}.tar.bz2
+Source0:       linux-staging-%{version}%{?prever:-%{prever}}.tar.bz2
 Source1:       create-linux-staging-tarball.sh
 
 Provides:      staging-kmod-common = %{version}-%{release}
@@ -23,7 +26,7 @@ Documentation for some of the kernel modules from linux-staging.
 
 
 %prep
-%setup -q -n linux-staging-%{version}
+%setup -q -n linux-staging-%{version}%{?prever:-%{prever}}
 # docs only for drivers that we ship
 mkdir .doc
 for driver in %{stgdrvs} ; do
@@ -55,6 +58,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Feb 20 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32.8-1
+- update to 2.6.32.8 for updates-testing kernel
+
+* Sun Dec 02 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32-0.1.rc1
+- enable HYPERV, RT3090, RTL8192E, VT6656
+- drop AGNX, dropped upstream
+- support RC's better
+
 * Sun Nov 01 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.31.5-2
 - enable FB_UDL RTL8192SU VT6655
 
