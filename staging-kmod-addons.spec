@@ -1,12 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs ASUS_OLED BATMAN_ADV EPL ET131X FB_UDL HECI HYPERV LINE6_USB RT2860 RT2870 RT3070 RT3090 RAMZSWAP R8187SE RTL8192SU RTL8192E RTL8192U SAMSUNG_LAPTOP SLICOSS W35UND PRISM2_USB VIDEO_GO7007 VT6655 VT6656
+%global stgdrvs ASUS_OLED BATMAN_ADV ECHO EPL ET131X FB_UDL HECI HYPERV LINE6_USB RT2860 RT2870 RT3070 RT3090 RAMZSWAP R8187SE RTL8192SU RTL8192E RTL8192U SAMSUNG_LAPTOP SLICOSS W35UND PRISM2_USB VIDEO_GO7007 VT6655 VT6656
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
 Version:       2.6.33.2
-Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
+Release:       %{?prever:0.}2%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Apr 25 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.33.2-2
+- enable echo
+
 * Fri Apr 16 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.33.2-1
 - update to 2.6.33.2 for F13
 
