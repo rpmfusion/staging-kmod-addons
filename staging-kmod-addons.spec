@@ -5,7 +5,7 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       2.6.35.6
+Version:       2.6.35.10
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jan 06 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.35.10-1
+- update to 2.6.35.10
+
 * Sat Oct 30 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.35.6-1
 - update to 2.6.35.6 for F14
 - enable FB_XGI
