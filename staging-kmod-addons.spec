@@ -5,7 +5,7 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       2.6.36.7
+Version:       2.6.38.7
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -58,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue May 24 2011 Nicolas Chauvet <kwizart@gmail.com> - 2.6.36.7-1
+* Tue May 24 2011 Nicolas Chauvet <kwizart@gmail.com> - 2.6.38.7-1
 - Update to 2.6.38.7
 
 * Thu Jan 06 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.35.10-1
