@@ -1,11 +1,11 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs ASUS_OLED EPL ET131X FB_UDL HECI HYPERV LINE6_USB RT2860 RT2870 RT3070 RT3090 RTL8187SE RTL8192SU RTL8192E SLICOSS W35UND PRISM2_USB VIDEO_GO7007 VT6655 VT6656 
+%global stgdrvs ASUS_OLED BATMAN_ADV ECHO EPL ET131X FB_UDL FB_XGI HECI HYPERV IDE_PHISON LINE6_USB RT2860 RT2870 RT3070 RT3090 RAMZSWAP R8187SE RTL8192SU RTL8192E RTL8192U SAMSUNG_LAPTOP SLICOSS W35UND PRISM2_USB VIDEO_GO7007 VT6655 VT6656
 
 # makes handling for rc kernels a whole lot easier:
-%global prever rc8
+#global prever rc8
 
 Name:          staging-kmod-addons
-Version:       2.6.32
+Version:       2.6.36.7
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -58,6 +58,29 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue May 24 2011 Nicolas Chauvet <kwizart@gmail.com> - 2.6.36.7-1
+- Update to 2.6.38.7
+
+* Thu Jan 06 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.35.10-1
+- update to 2.6.35.10
+
+* Sat Oct 30 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.35.6-1
+- update to 2.6.35.6 for F14
+- enable FB_XGI
+
+* Sun Aug 08 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.34.2-1.1
+- update to 2.6.34.2, which is hitting updates-testing for F13
+- enable phison (#1338)
+
+* Sun Apr 25 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.33.2-2
+- enable echo
+
+* Fri Apr 16 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.33.2-1
+- update to 2.6.33.2 for F13
+
+* Sat Feb 20 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32.8-1
+- update to 2.6.32.8 for updates-testing kernel
+
 * Sun Dec 02 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32-0.1.rc1
 - enable HYPERV, RT3090, RTL8192E, VT6656
 - drop AGNX, dropped upstream
