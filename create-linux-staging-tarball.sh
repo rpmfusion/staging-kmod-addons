@@ -13,7 +13,7 @@ targetdir="$(rpm --eval %{_sourcedir})"
 # * remove tmpdir on abortion
 pushd ${tmpdir}/ > /dev/null
 echo downloading
-wget --quiet http://www.kernel.org/pub/linux/kernel/v2.6/linux-${1}.tar.bz2
+wget --quiet http://www.kernel.org/pub/linux/kernel/v3.0/linux-${1}.tar.bz2
 echo extracing
 tar -xjf linux-${1}.tar.bz2 linux-${1}/COPYING linux-${1}/drivers/staging/
 echo creating archive
