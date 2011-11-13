@@ -5,8 +5,8 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       2.6.40
-Release:       %{?prever:0.}3%{?prever:.%{prever}}%{?dist}
+Version:       3.1
+Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Nov 06 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.1-1
+- update to 3.1 (no new drivers)
+
 * Mon Aug 01 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.40-3
 - update to 3.0 aka 2.6.40
 - Enable BRCMSMAC, BRCMFMAC, DRM_PSB, INTEL_MEI, RTS_PSTOR, XVMALLOC, ZCACHE 
