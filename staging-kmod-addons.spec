@@ -1,11 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs ASUS_OLED ATH6K_LEGACY BATMAN_ADV BRCMSMAC BRCMFMAC BCM_WIMAX DRM_PSB EASYCAP ECHO EPL ET131X FB_UDL FB_XGI FT1000_USB  HECI HYPERV IDE_PHISON  INTEL_MEI LINE6_USB RTS_PSTOR RAMZSWAP R8187SE R8712U RTL8192SU RTL8192E RTL8192U SBE_2T3E3 SLICOSS SOLO6X10 TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_ENESTORAGE W35UND PRISM2_USB VT6655 VT6656 XVMALLOC ZRAM ZCACHE 
+%global stgdrvs ASUS_OLED BCM_WIMAX EASYCAP ECHO EPL ET131X FB_UDL FB_XGI FT1000_USB  HECI IDE_PHISON  INTEL_MEI LINE6_USB RTS_PSTOR RAMZSWAP R8187SE R8712U RTL8192SU RTL8192E RTL8192U RTS5139 SLICOSS SOLO6X10 TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_ENESTORAGE W35UND PRISM2_USB VT6655 VT6656 XVMALLOC ZRAM ZCACHE 
+
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.1
+Version:       3.3
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -58,6 +59,15 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Mar 21 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.3-1
+- update to 3.3
+
+* Tue Jan 24 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.2.1-1.1
+- update to 3.2.1
+- drop ATH6K_LEGACY (replaced by a proper driver)
+- drop DRM_PSB (enabled in Fedora)
+- add RTS5139
+
 * Sun Nov 06 2011 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.1-1
 - update to 3.1 (no new drivers)
 
