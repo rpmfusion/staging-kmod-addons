@@ -7,7 +7,7 @@
 
 Name:          staging-kmod-addons
 Version:       3.3
-Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
+Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}.1
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -59,6 +59,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 14 2012 Nicolas Chauvet <kwizart@gmail.com> - 3.3-1.1
+- Rebuilt for release
+
 * Wed Mar 21 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.3-1
 - update to 3.3
 
