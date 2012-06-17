@@ -1,12 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs ASUS_OLED BCM_WIMAX EASYCAP ECHO EPL ET131X FB_UDL FB_XGI FT1000_USB  HECI IDE_PHISON  INTEL_MEI LINE6_USB RTS_PSTOR RAMZSWAP R8187SE R8712U RTL8192SU RTL8192E RTL8192U RTS5139 SLICOSS SOLO6X10 TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_ENESTORAGE W35UND PRISM2_USB VT6655 VT6656 XVMALLOC ZRAM ZCACHE 
+%global stgdrvs ASUS_OLED BCM_WIMAX EASYCAP ECHO EPL ET131X FB_UDL FB_XGI FT1000_USB  HECI IDE_PHISON  INTEL_MEI LINE6_USB RTS_PSTOR RAMZSWAP R8187SE RTL8192SU RTL8192E RTL8192U RTS5139 SLICOSS SOLO6X10 SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_ENESTORAGE USB_WPAN_HCD W35UND PRISM2_USB VT6655 VT6656 ZCACHE ZRAM ZSMALLOC
 
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.3
+Version:       3.4.2
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -59,6 +59,16 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jun 17 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.4.2-1
+- Update to 3.4.2
+- Enable USB_WPAN_HCD 
+- disable XVMALLOC and enable replacement ZSMALLOC
+- update create-linux-staging-tarball.sh to include drivers/video/sis/, 
+  needed for FB_XGI
+
+* Mon May 14 2012 Nicolas Chauvet <kwizart@gmail.com> - 3.3-1.1
+- Rebuilt for release
+
 * Wed Mar 21 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.3-1
 - update to 3.3
 
