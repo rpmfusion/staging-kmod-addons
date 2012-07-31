@@ -1,12 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs ASUS_OLED BCM_WIMAX EASYCAP ECHO EPL ET131X FB_UDL FB_XGI FT1000_USB  HECI IDE_PHISON  INTEL_MEI LINE6_USB RTS_PSTOR RAMZSWAP R8187SE RTL8192SU RTL8192E RTL8192U RTS5139 SLICOSS SOLO6X10 SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_ENESTORAGE USB_WPAN_HCD W35UND PRISM2_USB VT6655 VT6656 ZCACHE ZRAM ZSMALLOC
+%global stgdrvs ASUS_OLED BCM_WIMAX EASYCAP ECHO EPL ET131X FB_UDL FB_XGI FT1000_USB  HECI IDE_PHISON  LINE6_USB RTS_PSTOR RAMZSWAP R8187SE RTL8192SU RTL8192E RTL8192U RTS5139 SLICOSS SOLO6X10 SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_ENESTORAGE USB_WPAN_HCD USBIP_CORE W35UND PRISM2_USB VT6655 VT6656 ZCACHE ZRAM ZSMALLOC
 
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.4.2
+Version:       3.5
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -17,13 +17,42 @@ URL:           http://www.kernel.org/
 #  bash $(rpm --eval '%{_sourcedir}')/create-linux-staging-tarball.sh 2.6.30.8
 Source0:       linux-staging-%{version}%{?prever:-%{prever}}.tar.bz2
 Source1:       create-linux-staging-tarball.sh
-
+Source2:       usbip-server.service
+Source3:       usbip-client.service
+Source4:       usbip.configuration
 Provides:      staging-kmod-common = %{version}-%{release}
-BuildArch:     noarch
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires: glib2-devel libtool pkgconfig
+BuildRequires: libsysfs-devel
 
 %description
 Documentation for some of the kernel modules from linux-staging.
+
+
+%package -n usbip
+License:       GPLv2+
+Summary:       USB/IP userspace
+Group:         System Environment/Daemons
+Requires:      %{name} = %{version}
+Requires:      hwdata
+Requires:       systemd-units
+Requires(post): systemd-units
+Requires(preun): systemd-units
+Requires(postun): systemd-units
+
+%description -n usbip
+Userspace for USB/IP from linux-staging
+
+
+%package -n usbip-devel
+License:       GPLv2+
+Summary:       USB/IP headers and development libraries
+Group:         System Environment/Libraries
+Requires:      usbip%{?_isa} = %{version}
+
+%description -n usbip-devel
+This package contains headers and static libraries for USB/IP userspace
+development
 
 
 %prep
@@ -41,24 +70,85 @@ done
 
 
 %build
-echo "Nothing to build"
+# Build usbip userspace
+cd drivers/staging/usbip/userspace
+./autogen.sh
+%configure --disable-static --with-usbids-dir=/usr/share/hwdata
+make %{?_smp_mflags}
 
 
 %install
-rm -rf $RPM_BUILD_ROOT; mkdir $RPM_BUILD_ROOT
-echo "Nothing to install"
+# Install usbip userspace
+cd drivers/staging/usbip/userspace
+%makeinstall
+rm -f %{buildroot}%{_libdir}/*.la
+mkdir -p %{buildroot}%{_unitdir}
+install -m 644 %{SOURCE2} %{buildroot}%{_unitdir}
+install -m 644 %{SOURCE3} %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}%{_sysconfdir}/default
+install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/default/usbip
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+%post -n usbip
+/sbin/ldconfig
+if [ $1 -eq 1 ] ; then
+    # Initial installation 
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
+%preun -n usbip
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable usbip-server.service > /dev/null 2>&1 || :
+    /bin/systemctl stop usbip-server.service > /dev/null 2>&1 || :
+    /bin/systemctl --no-reload disable usbip-client.service > /dev/null 2>&1 || :
+    /bin/systemctl stop usbip-client.service > /dev/null 2>&1 || :
+fi
+
+%postun -n usbip
+/sbin/ldconfig
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart usbip-server.service >/dev/null 2>&1 || :
+    /bin/systemctl try-restart usbip-client.service >/dev/null 2>&1 || :
+fi
+
+
+%files -n usbip-devel
+%defattr(-,root,root,-)
+%doc drivers/staging/usbip/userspace/COPYING
+%{_includedir}/*
+%{_libdir}/libusbip.so
 
 %files
 %defattr(-,root,root,-)
 %doc COPYING .doc/*
 
+%files -n usbip
+%defattr(-,root,root,-)
+%doc COPYING
+%{_sbindir}/usbip*
+%{_libdir}/libusbip.so.*
+%{_mandir}/man8/*
+%{_unitdir}/*
+%config(noreplace) %{_sysconfdir}/default/*
+
 
 %changelog
+* Tue Jul 31 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.5-1.1
+- Update to 3.5
+- Disable Mei, now a proper driver
+
+* Wed Jul 25 2012 Jonathan Dieter <jdieter@gmail.com> - 3.4.2-3
+- Split USB/IP userspace into subpackage
+- Add systemd service for server
+
+* Mon Jul 16 2012 Jonathan Dieter <jdieter@gmail.com> - 3.4.2-2
+- Enable userspace for USB/IP
+- Add devel subpackage
+- Remove noarch as userspace is dependent on architecture
+
 * Sun Jun 17 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.4.2-1
 - Update to 3.4.2
 - Enable USB_WPAN_HCD 
