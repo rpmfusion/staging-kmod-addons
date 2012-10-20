@@ -24,6 +24,7 @@ Provides:      staging-kmod-common = %{version}-%{release}
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: glib2-devel libtool pkgconfig
 BuildRequires: libsysfs-devel
+BuildRequires: systemd-units
 
 %description
 Documentation for some of the kernel modules from linux-staging.
