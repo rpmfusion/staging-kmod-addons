@@ -1,0 +1,12 @@
+[Unit]
+Description=USB/IP client modules
+After=syslog.target
+
+[Service]
+Type=OneShot
+RemainAfterExit=true
+ExecStart=/sbin/modprobe -qab vhci-hcd
+ExecStop=/sbin/modprobe -qabr vhci-hcd
+
+[Install]
+WantedBy=multi-user.target

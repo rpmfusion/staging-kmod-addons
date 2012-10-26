@@ -1,0 +1,12 @@
+[Unit]
+Description=USB/IP server daemon
+After=syslog.target
+
+[Service]
+EnvironmentFile=-/etc/default/usbip
+ExecStartPre=/sbin/modprobe -qab usbip_host
+ExecStart=/usr/sbin/usbipd $OPTIONS
+ExecStop=/sbin/modprobe -qabr usbip_host
+
+[Install]
+WantedBy=multi-user.target
