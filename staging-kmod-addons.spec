@@ -6,7 +6,7 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.6.1
+Version:       3.7.2
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -72,6 +72,9 @@ done
 %build
 # Build usbip userspace
 cd drivers/staging/usbip/userspace
+# this man page file got removed for 3.7:
+# http://git.kernel.org/linus/4faf3a8d1838b86e7b66441da9a088f347e1c56b
+sed -i 's/usbip_bind_driver.8//' Makefile.am
 ./autogen.sh
 %configure --disable-static --with-usbids-dir=/usr/share/hwdata
 make %{?_smp_mflags}
@@ -136,6 +139,10 @@ fi
 
 
 %changelog
+* Mon Jan 14 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.7.2-1
+- Update to 3.7.2
+- work around missing usbip_bind_driver.8, which is referenced from Makefile.am
+
 * Thu Oct 11 2012 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.6.1-1
 - Update to 3.6.1
 
