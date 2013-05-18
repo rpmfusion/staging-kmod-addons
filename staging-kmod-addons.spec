@@ -1,12 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs ASUS_OLED BCM_WIMAX CSR_WIFI CXT1E1 DGRP  ECHO ET131X  FB_XGI FT1000  IDE_PHISON LINE6_USB NET_VENDOR_SILICOM PRISM2_USB R8187SE RTL8192E RTL8192U RTS5139 SB105X SBE_2T3E3 SLICOSS SOLO6X10 SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 TRANZPORT USB_ENESTORAGE USB_SERIAL_QUATECH2 USB_WPAN_HCD USBIP_CORE VT6655 VT6656 WIMAX_GDM72XX WLAGS49_H25 W35UND WLAGS49_H2 ZCACHE ZRAM ZSMALLOC
+%global stgdrvs ASUS_OLED BCM_WIMAX CSR_WIFI DGRP  ECHO ET131X  FB_XGI FT1000 IDE_PHISON LINE6_USB NET_VENDOR_SILICOM PRISM2_USB R8187SE RTL8192U RTS5139 SLICOSS SOLO6X10 SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 TRANZPORT USB_ENESTORAGE USB_SERIAL_QUATECH2 USB_WPAN_HCD USBIP_CORE VT6655 VT6656 WIMAX_GDM72XX WLAGS49_H25 W35UND WLAGS49_H2 ZCACHE ZRAM ZSMALLOC
 
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.8.1
+Version:       3.9.2
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -139,6 +139,11 @@ fi
 
 
 %changelog
+* Sat May 18 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.9.2-1
+- Update to 3.9.2
+- disable SB105X - does not compile
+- disable ZCACHE - latest version not buildable as module
+
 * Fri Mar 01 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.8.1-1
 - Update to 3.8.1 and enable a few more drivers
 
