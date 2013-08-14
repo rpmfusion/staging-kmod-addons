@@ -24,6 +24,7 @@ Provides:      staging-kmod-common = %{version}-%{release}
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: glib2-devel libtool pkgconfig
 BuildRequires: libsysfs-devel
+BuildRequires: %{_sysconfdir}/rpm/macros.systemd
 
 %description
 Documentation for some of the kernel modules from linux-staging.
@@ -141,6 +142,7 @@ fi
 %changelog
 * Wed Aug 14 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.10.5-1
 - Update to 3.10.5
+- add /etc/rpm/macros.systemd as BR
 
 * Sat May 18 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.9.2-1
 - Update to 3.9.2
@@ -226,7 +228,7 @@ fi
 * Sat Feb 20 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32.8-1
 - update to 2.6.32.8 for updates-testing kernel
 
-* Sun Dec 02 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32-0.1.rc1
+* Wed Dec 02 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 2.6.32-0.1.rc1
 - enable HYPERV, RT3090, RTL8192E, VT6656
 - drop AGNX, dropped upstream
 - support RC's better
