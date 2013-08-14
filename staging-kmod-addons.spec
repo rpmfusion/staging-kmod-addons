@@ -6,7 +6,7 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.9.2
+Version:       3.10.5
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -139,6 +139,9 @@ fi
 
 
 %changelog
+* Wed Aug 14 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.10.5-1
+- Update to 3.10.5
+
 * Sat May 18 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.9.2-1
 - Update to 3.9.2
 - disable SB105X - does not compile
