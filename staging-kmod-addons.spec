@@ -7,7 +7,7 @@
 
 Name:          staging-kmod-addons
 Version:       3.11.1
-Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
+Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}.1
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -140,6 +140,9 @@ fi
 
 
 %changelog
+* Thu Oct 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 3.11.1-1.1
+- Rebuilt
+
 * Fri Sep 20 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.11.1-1
 - Update to 3.11.1
 - drop csr, dropped upstream
