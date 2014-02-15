@@ -6,7 +6,7 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.12.6
+Version:       3.13.3
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -15,7 +15,7 @@ License:       GPLv2
 URL:           http://www.kernel.org/
 # use the script from Source1 to create this archive; call it like this: 
 #  bash $(rpm --eval '%{_sourcedir}')/create-linux-staging-tarball.sh 2.6.30.8
-Source0:       linux-staging-%{version}%{?prever:-%{prever}}.tar.bz2
+Source0:       linux-staging-%{version}%{?prever:-%{prever}}.tar.xz
 Source1:       create-linux-staging-tarball.sh
 Source2:       usbip-server.service
 Source3:       usbip-client.service
@@ -144,6 +144,10 @@ fi
 
 
 %changelog
+* Sat Feb 15 2014 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.13.3-1
+- Update to 3.13.3
+- switch from bz2 to xz
+
 * Fri Dec 20 2013 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.12.6-1
 - Update to 3.12.6
 - drop ASUS_OLED, dropped upstream

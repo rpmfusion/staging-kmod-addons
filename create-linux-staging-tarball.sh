@@ -13,16 +13,16 @@ targetdir="$(rpm --eval %{_sourcedir})"
 # * remove tmpdir on abortion
 pushd ${tmpdir}/ > /dev/null
 echo downloading
-wget --quiet http://www.kernel.org/pub/linux/kernel/v3.0/linux-${1}.tar.bz2
+wget --quiet http://www.kernel.org/pub/linux/kernel/v3.0/linux-${1}.tar.xz
 echo extracing
-tar -xjf linux-${1}.tar.bz2 linux-${1}/COPYING linux-${1}/drivers/staging/ linux-${1}/drivers/video/sis/
+tar -xJf linux-${1}.tar.xz linux-${1}/COPYING linux-${1}/drivers/staging/ linux-${1}/drivers/video/sis/
 echo creating archive
 mv linux-${1} linux-staging-${1}
 # drivers/video/sis/vgatypes.h needed for FB_XGI
-tar -cjf ${targetdir}/linux-staging-${1}.tar.bz2 linux-staging-${1}/COPYING linux-staging-${1}/drivers/staging/ linux-staging-${1}/drivers/video/sis/
-rm -rf linux-${1}.tar.bz2 linux-staging-${1}/
+tar -cJf ${targetdir}/linux-staging-${1}.tar.xz linux-staging-${1}/COPYING linux-staging-${1}/drivers/staging/ linux-staging-${1}/drivers/video/sis/
+rm -rf linux-${1}.tar.xz linux-staging-${1}/
 popd > /dev/null
 rmdir ${tmpdir}
-echo done: ${targetdir}/linux-staging-${1}.tar.bz2
+echo done: ${targetdir}/linux-staging-${1}.tar.xz
 
 
