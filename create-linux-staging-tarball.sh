@@ -15,11 +15,11 @@ pushd ${tmpdir}/ > /dev/null
 echo downloading
 wget --quiet http://www.kernel.org/pub/linux/kernel/v3.0/linux-${1}.tar.xz
 echo extracing
-tar -xJf linux-${1}.tar.xz linux-${1}/COPYING linux-${1}/drivers/staging/ linux-${1}/drivers/video/sis/
+tar -xJf linux-${1}.tar.xz linux-${1}/COPYING linux-${1}/drivers/staging/ linux-${1}/drivers/video/fbdev/sis/
 echo creating archive
 mv linux-${1} linux-staging-${1}
 # drivers/video/sis/vgatypes.h needed for FB_XGI
-tar -cJf ${targetdir}/linux-staging-${1}.tar.xz linux-staging-${1}/COPYING linux-staging-${1}/drivers/staging/ linux-staging-${1}/drivers/video/sis/
+tar -cJf ${targetdir}/linux-staging-${1}.tar.xz linux-staging-${1}/COPYING linux-staging-${1}/drivers/staging/ linux-staging-${1}/drivers/video/fbdev/sis/
 rm -rf linux-${1}.tar.xz linux-staging-${1}/
 popd > /dev/null
 rmdir ${tmpdir}
