@@ -24,6 +24,7 @@ Provides:      staging-kmod-common = %{version}-%{release}
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: glib2-devel libtool pkgconfig
 BuildRequires: libsysfs-devel
+BuildRequires: %{_includedir}/libudev.h
 %if 0%{?fedora} >= 20
 BuildRequires: %{_prefix}/lib/rpm/macros.d/macros.systemd
 %else
@@ -148,6 +149,7 @@ fi
 - Update to 3.15.4
 - drop ECHI and R8187SE (left)
 - adjust downloadscript for file movements
+- add BR /usr/include/libudev.h
 
 * Wed Apr 30 2014 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.14.2-1
 - Update to 3.14.2
