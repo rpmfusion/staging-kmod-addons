@@ -1,12 +1,12 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs BCM_WIMAX DGRP FB_XGI FT1000 IDE_PHISON LINE6_USB LTE_GDM724X NET_VENDOR_SILICOM PRISM2_USB R8188EU RTL8192U  SOLO6X10 SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 TRANZPORT USB_ENESTORAGE USB_SERIAL_QUATECH2 USB_WPAN_HCD USBIP_CORE VT6655 VT6656 WIMAX_GDM72XX WLAGS49_H25 W35UND WLAGS49_H2
+%global stgdrvs BCM_WIMAX FB_XGI FT1000 LINE6_USB LTE_GDM724X PRISM2_USB R8188EU RTL8192U  SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_WPAN_HCD VT6655 VT6656 WIMAX_GDM72XX
 
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.16.2
+Version:       3.17.2
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -17,48 +17,12 @@ URL:           http://www.kernel.org/
 #  bash $(rpm --eval '%{_sourcedir}')/create-linux-staging-tarball.sh 2.6.30.8
 Source0:       linux-staging-%{version}%{?prever:-%{prever}}.tar.xz
 Source1:       create-linux-staging-tarball.sh
-Source2:       usbip-server.service
-Source3:       usbip-client.service
-Source4:       usbip.configuration
 Provides:      staging-kmod-common = %{version}-%{release}
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: glib2-devel libtool pkgconfig
-BuildRequires: libsysfs-devel
-BuildRequires: %{_includedir}/libudev.h
-%if 0%{?fedora} >= 20
-BuildRequires: %{_prefix}/lib/rpm/macros.d/macros.systemd
-%else
-BuildRequires: %{_sysconfdir}/rpm/macros.systemd
-%endif
+BuildArch:     noarch
 
 %description
 Documentation for some of the kernel modules from linux-staging.
-
-
-%package -n usbip
-License:       GPLv2+
-Summary:       USB/IP userspace
-Group:         System Environment/Daemons
-Requires:      %{name} = %{version}
-Requires:      hwdata
-Requires:       systemd-units
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
-
-%description -n usbip
-Userspace for USB/IP from linux-staging
-
-
-%package -n usbip-devel
-License:       GPLv2+
-Summary:       USB/IP headers and development libraries
-Group:         System Environment/Libraries
-Requires:      usbip%{?_isa} = %{version}
-
-%description -n usbip-devel
-This package contains headers and static libraries for USB/IP userspace
-development
 
 
 %prep
@@ -76,75 +40,25 @@ done
 
 
 %build
-# Build usbip userspace
-cd drivers/staging/usbip/userspace
-# this man page file got removed for 3.7:
-# http://git.kernel.org/linus/4faf3a8d1838b86e7b66441da9a088f347e1c56b
-sed -i 's/usbip_bind_driver.8//' Makefile.am
-./autogen.sh
-%configure --disable-static --with-usbids-dir=/usr/share/hwdata
-make %{?_smp_mflags}
+# nothing to build
 
 
 %install
-# Install usbip userspace
-cd drivers/staging/usbip/userspace
-%makeinstall
-rm -f %{buildroot}%{_libdir}/*.la
-mkdir -p %{buildroot}%{_unitdir}
-install -m 644 %{SOURCE2} %{buildroot}%{_unitdir}
-install -m 644 %{SOURCE3} %{buildroot}%{_unitdir}
-mkdir -p %{buildroot}%{_sysconfdir}/default
-install -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/default/usbip
+# nothing to install
 
-
-%post -n usbip
-/sbin/ldconfig
-if [ $1 -eq 1 ] ; then
-    # Initial installation 
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-
-%preun -n usbip
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable usbip-server.service > /dev/null 2>&1 || :
-    /bin/systemctl stop usbip-server.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable usbip-client.service > /dev/null 2>&1 || :
-    /bin/systemctl stop usbip-client.service > /dev/null 2>&1 || :
-fi
-
-%postun -n usbip
-/sbin/ldconfig
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart usbip-server.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart usbip-client.service >/dev/null 2>&1 || :
-fi
-
-
-%files -n usbip-devel
-%defattr(-,root,root,-)
-%doc drivers/staging/usbip/userspace/COPYING
-%{_includedir}/*
-%{_libdir}/libusbip.so
 
 %files
 %defattr(-,root,root,-)
 %doc COPYING .doc/*
 
-%files -n usbip
-%defattr(-,root,root,-)
-%doc COPYING
-%{_sbindir}/usbip*
-%{_libdir}/libusbip.so.*
-%{_mandir}/man8/*
-%{_unitdir}/*
-%config(noreplace) %{_sysconfdir}/default/*
-
 
 %changelog
+* Sat Nov 15 2014 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.17.2-1
+- Update to 3.17.2
+- sync driverlist with staging-kmod
+- drop usbip stuff, is now a porper driver
+- make package noarch
+
 * Tue Sep 09 2014 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.16.2-1
 - Update to 3.16.2
 - drop RTS5139 (left stating)
