@@ -7,7 +7,7 @@
 
 Name:          staging-kmod-addons
 Version:       3.18.2
-Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
+Release:       %{?prever:0.}2%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -53,6 +53,9 @@ done
 
 
 %changelog
+* Tue Mar 24 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.18.2-2
+- Rebuild
+
 * Sun Jan 11 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.18.2-1
 - Update to 3.18.2
 
