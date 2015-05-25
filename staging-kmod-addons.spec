@@ -1,12 +1,11 @@
 # drivers that we ship; to be synced with staging-kmod.spec
-%global stgdrvs FB_XGI FT1000 LINE6_USB LTE_GDM724X PRISM2_USB R8188EU RTL8192U SPEAKUP TOUCHSCREEN_CLEARPAD_TM1217 TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_WPAN_HCD VT6655 VT6656 WIMAX_GDM72XX
-
+%global stgdrvs FB_XGI FT1000 LTE_GDM724X PRISM2_USB R8188EU RTL8192U SPEAKUP TOUCHSCREEN_SYNAPTICS_I2C_RMI4 USB_WPAN_HCD VT6655 VT6656 WIMAX_GDM72XX SLICOSS 
 
 # makes handling for rc kernels a whole lot easier:
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       3.19.2
+Version:       4.0.4
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -53,6 +52,10 @@ done
 
 
 %changelog
+* Mon May 25 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.0.4-1
+- Update to 4.0.4
+- Drop LINE6_USB and TOUCHSCREEN_CLEARPAD_TM1217 (dropped upstream)
+
 * Tue Mar 24 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 3.19.2-1
 - Update to 3.19.2
 - Drop BCM_WIMAX, dropped upstream

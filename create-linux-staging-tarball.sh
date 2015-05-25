@@ -1,4 +1,5 @@
-#! /bin/bash
+#! /bin/bash 
+set -e
 if [[ ! "${1}" ]]; then
 	echo "Please give version number as parameter"
 	exit 1
@@ -13,7 +14,7 @@ targetdir="$(rpm --eval %{_sourcedir})"
 # * remove tmpdir on abortion
 pushd ${tmpdir}/ > /dev/null
 echo downloading
-wget --quiet http://www.kernel.org/pub/linux/kernel/v3.0/linux-${1}.tar.xz
+wget --quiet http://www.kernel.org/pub/linux/kernel/v4.x/linux-${1}.tar.xz
 echo extracing
 tar -xJf linux-${1}.tar.xz linux-${1}/COPYING linux-${1}/drivers/staging/ linux-${1}/drivers/video/fbdev/sis/
 echo creating archive
