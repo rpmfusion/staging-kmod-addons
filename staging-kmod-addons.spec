@@ -5,7 +5,7 @@
 #global prever rc8
 
 Name:          staging-kmod-addons
-Version:       4.0.4
+Version:       4.1.4
 Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
 Summary:       Documentation and shared parts for the kmod-staging packages
 
@@ -52,6 +52,9 @@ done
 
 
 %changelog
+* Tue Aug 4 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.1.4-1
+- Update to 4.1.4
+
 * Mon May 25 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.0.4-1
 - Update to 4.0.4
 - Drop LINE6_USB and TOUCHSCREEN_CLEARPAD_TM1217 (dropped upstream)
