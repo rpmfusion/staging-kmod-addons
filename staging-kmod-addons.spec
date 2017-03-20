@@ -6,7 +6,7 @@
 
 Name:          staging-kmod-addons
 Version:       4.1.4
-Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}
+Release:       %{?prever:0.}1%{?prever:.%{prever}}%{?dist}.1
 Summary:       Documentation and shared parts for the kmod-staging packages
 
 Group:         System Environment/Kernel
@@ -52,6 +52,9 @@ done
 
 
 %changelog
+* Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 4.1.4-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Tue Aug 4 2015 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 4.1.4-1
 - Update to 4.1.4
 
